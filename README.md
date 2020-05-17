@@ -2,7 +2,9 @@
 exHenai API 
 
 ## 安装
-
+```bash
+npm install exApi -save
+```
 
 ## 使用方法
 1. 一个可以进里区的账户  
