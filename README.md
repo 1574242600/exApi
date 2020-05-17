@@ -3,7 +3,7 @@ exHenai API
 
 ## 安装
 ```bash
-npm install exApi -save
+npm install exapi -save
 ```
 
 ## 使用方法
