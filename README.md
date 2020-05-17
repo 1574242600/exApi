@@ -69,7 +69,7 @@ let list = index.getAll()
 @return Class ehGallery
 */
 let href = ['627844','39dbc33ad8'];  // https://exhentai.org/g/627844/39dbc33ad8/
-let gallery = exapi.getGalleryInfo(href)
+let gallery = await exapi.getGalleryInfo(href)
 ```
 
 - ehGallery.getAllInfo()
