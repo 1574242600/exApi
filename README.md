@@ -1,5 +1,5 @@
 # exApi
-exHenai API 
+exHentai API 
 
 ## 安装
 ```bash
