@@ -19,15 +19,20 @@ class exApi {
 
         const getHtml ={
             gallery: async (page) => {
-                return await this._ehHtml.getGallery(href,page,-1)
+                return await this._ehHtml.getGallery(href, page, -1)
             }
         }
 
         return new ehParse.ehGallery(html, getHtml);
     }
 
-    async getImgUrl(list){
-        return await ehParse.ehImg.get(list,this._ehHtml.getViewImg)
+    async getImgUrl(list) {
+        return await ehParse.ehImg.get(list, this._ehHtml.getViewImg)
+    }
+
+    async search(searchConfig) {
+        let html = await this._ehHtml.getSearch(searchConfig);
+        return new ehParse.ehSearch(html, searchConfig, this._ehHtml.getSearch)
     }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "exapi",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "exhentai api",
   "main": "exApi.js",
   "dependencies": {
@@ -10,7 +10,7 @@
   },
   "devDependencies": {},
   "repository": {
-    "type" : "git",
+    "type": "git",
     "url": "git://github.com/1574242600/exApi.git"
   },
   "scripts": {

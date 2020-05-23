@@ -2,22 +2,23 @@ const cheerio = require('cheerio');
 
 class ehIndex {
     _list = [];
+    pages = 1;  //总页码
+
     constructor(html) {
         this._parseTable(html);
     }
 
-
-    getAll(){
+    getAll() {
         return this._list;
     }
 
-
-    _parseTable(html){
+    _parseTable(html) {
         let $ = cheerio.load(html);
         let table = $("table[class='itg gltc']").find('tr');
 
-        table.each((i,element) => {
-            if(i === 0) return 1;
+        this._list = [];
+        table.each((i, element) => {
+            if (i === 0) return 1;
             //console.log($(element).html());
             let index = i - 1;
             this._list[index] = {};
@@ -75,23 +76,53 @@ class ehIndex {
                 {   //链接
                     let href = $(element).find("td[class='gl3c glname']>a").attr('href');
                     let match = href.match(/([0-9]+)\/([0-9a-z]+)\//)
-                    this._list[index].href = [match[1],match[2]];
+                    this._list[index].href = [match[1], match[2]];
                 }
             }
-
             //console.log(this._list);
         });
+
+        {  //总页码
+            let total = $(".ptt").find("tr>td");
+            let index = total.length - 2;
+            this.pages = Number($(total[index]).find("a").text())
+        }
     }
 }
+
+class ehSearch extends ehIndex {
+    searchConfig;
+    getSearch;
+    page = 1;
+
+    constructor(html, searchConfig, getSearch) {
+        super(html);
+        this.searchConfig = searchConfig;
+        this.getSearch = getSearch;
+    }
+
+    async next(i = 1) {
+        let p = this.page + i;
+        if (p > super.pages || p < 1) {
+            return null;
+        }
+        this.page = p;
+
+        let html = await this.getSearch(this.searchConfig, p);
+        super._parseTable(html);
+        return this;
+    }
+}
+
 
 class ehGallery {
     _info = {};
     _thumbnails = [] //缩略图
     _viewImgHref = [];
-    _comment= [];
-    _total = 0 ;  //当前页,图数量
-    _page = 1 ;  //当前页码
-    _pages = 1 ;  //总页码
+    _comment = [];
+    _total = 0;  //当前页,图数量
+    _page = 1;  //当前页码
+    _pages = 1;  //总页码
     _getHtml;
 
     constructor(html, getHtml) {
@@ -312,5 +343,6 @@ class ehImg {
 module.exports = {
     ehIndex: ehIndex,
     ehGallery: ehGallery,
+    ehSearch: ehSearch,
     ehImg: ehImg
 }

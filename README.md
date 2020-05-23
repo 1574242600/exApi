@@ -59,6 +59,54 @@ let index = await exapi.getIndex(page);
 let list = index.getAll()
 ```
 
+- ehIndex.pages
+```javascript
+// 总页码
+let pages = index.pages;
+```
+
+### 搜索
+- exapi.search(searchConfig)
+
+```javascript
+/*
+@param String|Object searchConfig 搜索设置
+@return Class ehSearch (extends ehIndex)
+*/
+
+let search = await exapi.search('c97');  //字符串搜索
+
+let searchConfig = {
+     type: ['Doujinshi' ...], //需要的类型
+     tag: {
+         artist: ['shouji ayumu'...] ,
+         female: ['lolicon'...],
+     ...
+     },
+     text: '' //搜索字符串
+};
+            
+let search = await exapi.search(searchConfig)
+```
+
+- ehSearch.next(i = 1)
+```javascript
+/*
+下页
+@param Number i 可选,翻指定页数
+@return Class this
+影响 
+ehSearch.getAll()
+ehSearch.page
+*/
+
+await ehSearch.next();
+
+//或
+
+let search = await ehSearch.next();
+```
+
 ### 画廊
 - exapi.getGalleryInfo(href, thumbnailsType = 1)
 
@@ -167,8 +215,8 @@ let thumbnails = gallery.getThumbnails()
 - ehGallery.next(i = 1) 
 ```javascript
 /* 
-下1页
-@param Number i 可选,下i页
+下页
+@param Number i 可选,翻指定页数
 @return Class this
 影响
 ehGallery.getThumbnails()
@@ -230,7 +278,9 @@ Thx
 - [node-socks-proxy-agent](https://github.com/TooTallNate/node-socks-proxy-agent) - MIT
 
 ## todo
-- [ ] 搜索
+- 搜索
+    - [x] 基础搜索
+    - [ ] 高级搜索
 - [ ] 下载
  
 ## License
