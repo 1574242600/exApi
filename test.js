@@ -14,8 +14,8 @@ const log = (data,msg) => {
 }
 
 async function main() {
-    let exapi = new ehApi(cookies,socks5proxy);
-
+    //let exapi = new ehApi(cookies,socks5proxy);
+    let exapi = new ehApi(cookies);
     {   //首页
         let list = await exapi.getIndex(0);
         log(list.getAll(), 'getIndex')
