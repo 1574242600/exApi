@@ -1,6 +1,8 @@
 # exApi
 exHentai API 
 
+![Node.js CI](https://github.com/1574242600/exApi/workflows/Node.js%20CI/badge.svg?branch=master&event=push)
+
 ## 安装
 ```bash
 npm install exapi -save
