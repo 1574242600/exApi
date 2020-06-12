@@ -14,8 +14,9 @@ const log = (data,msg) => {
 }
 
 async function main() {
-    //let exapi = new ehApi(cookies,socks5proxy);
     let exapi = new ehApi(cookies);
+
+
     {   //首页
         let list = await exapi.getIndex(0);
         log(list.getAll(), 'getIndex')
@@ -31,13 +32,14 @@ async function main() {
         log(gallery.getViewHref(), 'getViewUrl')
         log(gallery.getComment(), 'getComment')
 
+
         {
             let imgUrl = await exapi.getImgUrl(gallery.getViewHref()[0]);
             log(imgUrl, 'getImgUrl a')
-            console.log('可能会有点久');
             let imgUrlArr = await exapi.getImgUrl(gallery.getViewHref());
             log(imgUrlArr, 'getImgUrl arr')
         }
+
 
         await gallery.next();
 
@@ -72,6 +74,13 @@ async function main() {
             await search.next()
             log(search.getAll(), 'tag search.next()')
         }
+
+    }
+
+    {   //下载
+        exapi.downloadGallery(['627844', '39dbc33ad8']).then(statusList => {
+            console.log(statusList)
+        });
 
     }
 }
