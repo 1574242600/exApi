@@ -31,8 +31,5 @@ jobs:
     - name: view download folder
       run: |
         ls
-        cd ./627844
-        ls
-        cat info.json
 
 
