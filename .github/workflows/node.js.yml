@@ -22,5 +22,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: npm test
+    - name: install
+      run: |
+        npm install
+    - name: test
+      run: |
+        npm test
+    - name: view download folder
+      run: |
+        cd ./download
+        ls
+        cd ./627844
+        ls
+        cat info.json

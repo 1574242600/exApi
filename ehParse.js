@@ -121,20 +121,23 @@ class ehGallery {
     _viewImgHref = [];
     _comment = [];
     _total = 0;  //当前页,图数量
-    _page = 1;  //当前页码
-    _pages = 1;  //总页码
     _getHtml;
+    href;
+    page = 1;  //当前页码
+    pages;  //总页码
 
-    constructor(html, getHtml) {
+
+    constructor(html, getHtml, href) {
         let Info = this._parseGalleryInfo(html);
         let Thumbnails = this._parseGalleryThumbnails(html)
         let Img = this._parseGalleryViewImg(html);
         let Comment = this._parseGalleryComment(html);
         this._getHtml = getHtml;
-        Promise.all([Info,Thumbnails,Img,Comment])
+        this.href = href;
+        Promise.all([Info, Thumbnails, Img, Comment])
     }
 
-    getInfo(key = 'type'){
+    getInfo(key = 'type') {
         return this._info[key];
     }
 
@@ -146,25 +149,26 @@ class ehGallery {
         return this._thumbnails;
     }
 
-    getViewHref(){
+    getViewHref() {
         return this._viewImgHref;
     }
 
-    getComment(){
+    getComment() {
         return this._comment;
     }
 
-    async next(i = 1){
-        let p = this._page + i;
-        if (p > this._pages || p < 1){
+    async next(i = 1) {
+        let p = this.page + i;
+        if (p > this.pages || p < 1) {
             return null;
         }
-        this._page = p;
+
+        this.page = p;
 
         let html = await this._getHtml.gallery(p);
         let thumb = this._parseGalleryThumbnails(html);
         let img = this._parseGalleryViewImg(html);
-        await Promise.all([thumb,img])
+        await Promise.all([thumb, img])
 
         return this;
     }
@@ -219,7 +223,7 @@ class ehGallery {
         {  //总页码
             let total = $(".ptb").find("tr>td");
             let index = total.length - 2;
-            this._pages = Number($(total[index]).find("a").text())
+            this.pages = Number($(total[index]).find("a").text())
         }
     }
 
@@ -311,19 +315,16 @@ class ehImg {
      static async get(list = undefined, getViewImg) {
         if(list === undefined || list[0] === undefined) return null;
 
-        if(list[0] instanceof Array){
-            let urlArr = [];
+        if(list[0] instanceof Array) {
             let asyncList = [];
 
-            for (let i in list){
-                asyncList[i] = ehImg._getUrl(list[i],getViewImg);
+            for (let i in list) {
+                asyncList[i] = ehImg._getUrl(list[i], getViewImg);
             }
 
-            await Promise.all([...asyncList]).then(v => {
-                urlArr = v;
+            return await Promise.all([...asyncList]).then(v => {
+                return v
             });
-
-            return urlArr;
         }
 
         return await ehImg._getUrl(list,getViewImg);

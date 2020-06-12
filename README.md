@@ -261,7 +261,7 @@ let hrefList = gallery.getViewHref()
 let imgUrl = await exapi.getImgUrl(hrefList[0]) // "https://*.jpg"
 
 let imgUrlList = await exapi.getImgUrl(hrefList) 
-//时间可能略长,异步也救不了
+//时间可能略长
 /*
 [ 
     "https://*.jpg"
@@ -273,7 +273,34 @@ let imgUrlList = await exapi.getImgUrl(hrefList)
 
 
 ```
+### 下载画廊
+exapi.downloadGallery(href, path='./download')
 
+```javascript
+/*
+@param Array href id和token
+@return Array statusList
+网络不好时，可能会超时，会重试
+*/
+
+//时间可能略长
+exapi.downloadGallery(['627844','39dbc33ad8']).then(statusList => {
+    console.log(statusList)
+});
+
+/*
+[
+  { id: 0, fileName: 'CE_213_000.jpg', ok: true },
+  { id: 1, fileName: 'CE_213_001.jpg', ok: true },
+  { id: 2, fileName: 'CE_213_002.jpg', ok: true },
+  { id: 3, fileName: 'CE_213_003.jpg', ok: true },
+  { id: 4, fileName: 'CE_213_004.jpg', ok: true },
+  { id: 5, fileName: 'CE_213_005.jpg', ok: true },
+  { id: 6, fileName: 'CE_213_006.jpg', ok: true },
+...
+*/
+//重要: 详细内容 请去 actions workflows 查看
+```
 ## 使用开源项目
 Thx  
 - [cheerio](https://github.com/cheeriojs/cheerio) - MIT
@@ -284,7 +311,8 @@ Thx
 - 搜索
     - [x] 基础搜索
     - [ ] 高级搜索
-- [ ] 下载
+- [x] 下载
+    - [ ] 优化
  
 ## License
 MIT
