@@ -30,6 +30,9 @@ jobs:
         npm test
     - name: view download folder
       run: |
-        ls
+        ls ./download/
+        ls ./download/627844
+        cat ./download/627844/info.json
+
 
 
