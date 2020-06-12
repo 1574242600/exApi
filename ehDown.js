@@ -71,7 +71,7 @@ class ehDownload extends ehImg {
             this._logger('Error', `id:${id} 图片下载失败`);
             return {
                 id: id,
-                fileName: fileName ?? null,
+                fileName: fileName === undefined ? null : fileName,
                 ok: false
             };
         }

@@ -28,10 +28,4 @@ jobs:
     - name: test
       run: |
         npm test
-    - name: view download folder
-      run: |
-        cd ./download
-        ls
-        cd ./627844
-        ls
-        cat info.json
+
