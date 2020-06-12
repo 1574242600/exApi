@@ -24,7 +24,7 @@ class ehUrl {
     static search(searchConfig, p) {
         const config = searchConfig;
 
-        if (typeof (config) === 'string') return `${self.host}/?f_search=${config}&page=${p}`;
+        if (typeof (config) === 'string') return `${this.host}/?f_search=${config}&page=${p}`;
         let str = '/?';  //查询字符串
 
         {//基础
