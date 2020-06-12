@@ -95,11 +95,14 @@ class ehDownload extends ehImg {
     }
 
     _mkdir(path) {
-        let stat = fs.statSync(path);
-        if (!stat.isDirectory()) fs.mkdirSync(path);
-
-        stat = fs.statSync(this._path);
-        if (!stat.isDirectory()) fs.mkdirSync(this._path);
+        try {
+            let stat = fs.statSync(path);
+            stat = fs.statSync(this._path);
+        } catch (e) {
+            fs.mkdirSync(path);
+            fs.mkdirSync(this._path);
+            this._mkdir(path);
+        }
     }
 }
 
