@@ -30,8 +30,11 @@ jobs:
         npm test
     - name: view download folder
       run: |
+        echo '==============/download/=================='
         ls ./download/
+        echo '==============/download/627844/=================='
         ls ./download/627844
+        echo '==============/download/627844/info.json=================='
         cat ./download/627844/info.json
 
 
