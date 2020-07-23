@@ -1,6 +1,6 @@
 declare module 'exapi' {
     interface ApiCookies {
-        ipb_member_id: string,
+        ipb_member_id: number,
         ipb_pass_hash: string,
         igneous: string
     }
@@ -83,15 +83,17 @@ declare module 'exapi' {
 
     type  ThumbnailsType = 0 | 1 ;
 
-    export default class {
+    class exApi {
         constructor(cookies: ApiCookies, proxy?: string)
 
         getIndex(page: number): Promise<ehIndex>
         getGalleryInfo(gallery: GalleryToken, thumbnails_type?: ThumbnailsType): Promise<ehGallery>
         getImgUrl(token: ViewToken | ViewToken[]): Promise<string | string[]>
-        search(search: string | SearchConfig): Promise<ehSearch>
-        downloadGallery(href: GalleryToken, path: string): Promise<DownStatus[]>
+        search(search: string | SearchConfig | object): Promise<ehSearch>
+        downloadGallery(href: GalleryToken, path?: string): Promise<DownStatus[]>
     }
+
+    export = exApi;
 
     class ehIndex {
         pages: number;
