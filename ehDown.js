@@ -16,8 +16,9 @@ class EhDownload extends EhImg {
     }
 
     async run(path) {
+        let statusList = [];
+
         try {
-            let statusList = [];
             const info = this._info;
             this._path = path + `/${this._info.href[0]}/`;
             this._mkdir(path);
@@ -30,17 +31,17 @@ class EhDownload extends EhImg {
                 let imgHref = info.getViewHref()
                 if (onePages === undefined) onePages = imgHref.length;
 
-                for (let i in imgHref) {
-                    i = Number(i);
-                    statusList[onePages * p + i] = await this._down(imgHref[i], onePages * p + i)
-                }
+                let asyncList = imgHref.map((v, i) => {
+                    return () => this._down(v, onePages * p + i);
+                })
+
+                statusList.push(...(await EhImg.all(asyncList)));
 
                 if (info.page !== info.pages) await info.next();
                 p++;
             } while (p !== info.pages)
 
             this._logger('Note', `画廊下载完成`);
-            return statusList;
         } catch (e) {
             this._retryNumber.run === undefined ? this._retryNumber.run = 1 : this._retryNumber.run++;
             this._logger('Error', e.stack);
@@ -48,6 +49,8 @@ class EhDownload extends EhImg {
             if (this._retryNumber.run <= 2) return await this.run(path)
             this._logger('Note', `画廊下载失败`);
         }
+
+        return statusList;
     }
 
     async _down(imgHref, id) {

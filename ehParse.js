@@ -4,7 +4,7 @@ class EhIndex {
     _list = [];
     pages = 1;  //总页码
 
-    constructor(html) {
+    constructor (html) {
         this._parseTable(html);
     }
 
@@ -28,17 +28,17 @@ class EhIndex {
                     const style = div.find("div>div[class='ir']").attr('style');
                     let px = [];
                     let flag = 0;
-                    for (let i = 0; i < style.length; i++){
-                        if(flag === 2 ) break;
+                    for (let i = 0; i < style.length; i++) {
+                        if (flag === 2) break;
                         let now = style[i];
                         let next = style[i + 1]
-                        if(now + next === 'px'){
+                        if (now + next === 'px') {
                             let l = [];
-                            if(!isNaN(Number(style[i  - 2]))){
+                            if (!isNaN(Number(style[i - 2]))) {
                                 l[0] = style[i - 2];
                             }
 
-                            if(!isNaN(Number(style[i  - 1]))){
+                            if (!isNaN(Number(style[i - 1]))) {
                                 l[1] = style[i - 1];
                             }
                             px[flag] = Number(l.join(''));
@@ -46,10 +46,10 @@ class EhIndex {
                         }
                     }
 
-                    if(isNaN(px[0])) return 5;
+                    if (isNaN(px[0])) return 5;
 
                     let value = 0;
-                    if(px[1] === 21) value = 0.5;
+                    if (px[1] === 21) value = 0.5;
                     return 5 - value - px[0] / 16
                 }
 
@@ -95,7 +95,7 @@ class EhSearch extends EhIndex {
     getSearch;
     page = 1;
 
-    constructor(html, searchConfig, getSearch) {
+    constructor (html, searchConfig, getSearch) {
         super(html);
         this.searchConfig = searchConfig;
         this.getSearch = getSearch;
@@ -127,7 +127,7 @@ class EhGallery {
     pages;  //总页码
 
 
-    constructor(html, getHtml, href) {
+    constructor (html, getHtml, href) {
         let Info = this._parseGalleryInfo(html);
         let Thumbnails = this._parseGalleryThumbnails(html)
         let Img = this._parseGalleryViewImg(html);
@@ -141,11 +141,11 @@ class EhGallery {
         return this._info[key];
     }
 
-    getAllInfo(){
+    getAllInfo() {
         return this._info;
     }
 
-    getThumbnails(){
+    getThumbnails() {
         return this._thumbnails;
     }
 
@@ -173,7 +173,7 @@ class EhGallery {
         return this;
     }
 
-    async _parseGalleryInfo(html){
+    async _parseGalleryInfo(html) {
         let $ = cheerio.load(html);
         // console.log(html);
 
@@ -186,10 +186,10 @@ class EhGallery {
             this._info.uploader = $("#gdn>a").text();
 
             {   //如name[] 所示
-                let name = ['published','parent','visible','language','size','length','favorited'];
-                $("#gdd>table").find("tr").each((i,element) => {
+                let name = ['published', 'parent', 'visible', 'language', 'size', 'length', 'favorited'];
+                $("#gdd>table").find("tr").each((i, element) => {
                     let data = $(element).find(".gdt2").text();
-                    if ( i > 4) data = parseInt(data);
+                    if (i > 4) data = parseInt(data);
 
                     this._info[name[i]] = data;
                 });
@@ -207,14 +207,14 @@ class EhGallery {
             let tr = $("#taglist>table").find("tr");
             this._info.tag = {};
 
-            tr.each((_,element)=> {
+            tr.each((_, element) => {
                 let td = $(element).find("td");
-                let attr =  $(td[0]).text().slice(0,-1);
+                let attr = $(td[0]).text().slice(0, -1);
 
                 this._info.tag[attr] = [];
 
                 let div = $(td[1]).find("div");
-                div.each((i,element2) =>{
+                div.each((i, element2) => {
                     this._info.tag[attr][i] = $(element2).find("a").text();
                 })
             });
@@ -227,27 +227,27 @@ class EhGallery {
         }
     }
 
-    async _parseGalleryThumbnails(html){
+    async _parseGalleryThumbnails(html) {
         let $ = cheerio.load(html)
         let flag = $("#gdo4>div[class='ths nosel']").text();
         this._thumbnails = [];
 
         {   //缩略图
-            if(flag === "Normal"){
+            if (flag === "Normal") {
                 let list = $("#gdt").find("div[class='gdtm']").find("div");
                 this._total = list.length;
                 this._thumbnails[0] = $(list[0]).attr('style').match(/url\((.*?)\)/)[1]
             } else {
                 let list = $("#gdt").find("div[class='gdtl']").find("a>img");
                 this._total = list.length;
-                list.each((i,element) => {
+                list.each((i, element) => {
                     this._thumbnails[i] = $(element).attr("src");
                 })
             }
         }
     }
 
-    async _parseGalleryViewImg(html){
+    async _parseGalleryViewImg(html) {
         let $ = cheerio.load(html)
         this._viewImgHref = [];
 
@@ -260,7 +260,7 @@ class EhGallery {
         })
     }
 
-    async _parseGalleryComment(html){
+    async _parseGalleryComment(html) {
         let $ = cheerio.load(html);
         let list = $("#cdiv").find("div[class='c1']");
 
@@ -282,10 +282,10 @@ class EhGallery {
         const dateParse = (str) => {
 
             let arr = str.split(" ");
-            if(arr[2][0] === 0) delete arr[2][0];
+            if (arr[2][0] === 0) delete arr[2][0];
             let day = arr[2];
             let month = monthArr[arr[3]];
-            let year = arr[4].slice(0,-1);
+            let year = arr[4].slice(0, -1);
             arr = arr[5].split(":");
             let h = arr[0];
             let m = arr[1];
@@ -312,32 +312,57 @@ class EhGallery {
 
 class EhImg {
 
-     static async get(list = undefined, getViewImg) {
-        if(list === undefined || list[0] === undefined) return null;
+    static async get(list = undefined, getViewImg) {
+        if (list === undefined || list[0] === undefined) return null;
 
-        if(list[0] instanceof Array) {
-            let asyncList = [];
-
-            for (let i in list) {
-                asyncList[i] = EhImg._getUrl(list[i], getViewImg);
-            }
-
-            return await Promise.all([...asyncList]).then(v => {
-                return v
+        if (list[0] instanceof Array) {
+            let asyncList = list.map(v => {
+                return () => EhImg._getUrl(v, getViewImg);
             });
+
+            return await this.all(asyncList);
         }
 
-        return await EhImg._getUrl(list,getViewImg);
+        return await EhImg._getUrl(list, getViewImg);
     }
 
-    static async _getUrl(href,getViewImg){
-         let html = await getViewImg(href);
-         return await EhImg. _parseGalleryImgUrl(html)
+    static async _getUrl(href, getViewImg) {
+        let html = await getViewImg(href);
+        return await EhImg._parseGalleryImgUrl(html)
     }
 
-    static async _parseGalleryImgUrl(html){
+    static async _parseGalleryImgUrl(html) {
         let $ = cheerio.load(html);
         return $("#img").attr('src');
+    }
+
+    static async all(iterable, t = 3) {
+        let data = [];
+
+        for (let c = 0; c < iterable.length; c = c + t) {
+            let temporary_async = [];
+            for (let i of range(0, t)) {
+                let index = c + i;
+                if (index > iterable.length - 1) break;
+                temporary_async.push(iterable[index]());
+            }
+
+            await Promise.all(temporary_async).then(list => {
+                for (let v of list) {
+                    data.push(v);
+                }
+            })
+        }
+
+        if (data[0] !== undefined) {
+            return data;
+        }
+    }
+}
+
+function* range(start, end, step = 1){
+    for (let i = start; i < end; i += step) {
+        yield i;
     }
 }
 
