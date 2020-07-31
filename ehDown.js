@@ -35,7 +35,7 @@ class EhDownload extends EhImg {
                     return () => this._down(v, onePages * p + i);
                 })
 
-                statusList.push(...(await EhImg.all(asyncList)));
+                statusList.push(...(await EhImg.all(asyncList, 1)));
 
                 if (info.page !== info.pages) await info.next();
                 p++;
