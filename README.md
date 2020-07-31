@@ -14,7 +14,7 @@ npm install exapi -save
 2. 代理   （可选，exhentai没被墙）
 
 ```javascript
-const exApi = require('exApi');
+const exApi = require('exApi').default;
 
 const cookies = {
     'ipb_member_id': *,

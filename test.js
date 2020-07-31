@@ -4,7 +4,7 @@ const cookies = {
     'igneous': '322abe39d'
 } //公共账号   来自https://ex.acg.uy/
 
-const ehApi = require('../exApi');
+const ehApi = require('../exApi').default;
 const socks5proxy = "socks5://127.0.0.1:1083";
 
 const log = (data,msg) => {

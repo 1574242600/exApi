@@ -1,7 +1,7 @@
-const ehImg = require('./ehParse').ehImg;
+const EhImg = require('./ehParse').EhImg;
 const fs = require('fs');
 
-class ehDownload extends ehImg {
+class EhDownload extends EhImg {
     _info;
     _path;
     _getViewImg;
@@ -78,7 +78,7 @@ class ehDownload extends ehImg {
     }
 
     async _getImgUrl(list) {
-        return await ehImg.get(list, this._getViewImg)
+        return await EhImg.get(list, this._getViewImg)
     }
 
     _logger(mode = 'Error', msg) {
@@ -118,4 +118,4 @@ function timeSting() {
     return `${Y}-${M}-${D} ${h}:${m}:${s}`;
 }
 
-module.exports = ehDownload;
+module.exports = EhDownload;

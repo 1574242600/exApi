@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 
-class ehIndex {
+class EhIndex {
     _list = [];
     pages = 1;  //总页码
 
@@ -90,7 +90,7 @@ class ehIndex {
     }
 }
 
-class ehSearch extends ehIndex {
+class EhSearch extends EhIndex {
     searchConfig;
     getSearch;
     page = 1;
@@ -115,7 +115,7 @@ class ehSearch extends ehIndex {
 }
 
 
-class ehGallery {
+class EhGallery {
     _info = {};
     _thumbnails = [] //缩略图
     _viewImgHref = [];
@@ -310,7 +310,7 @@ class ehGallery {
 }
 
 
-class ehImg {
+class EhImg {
 
      static async get(list = undefined, getViewImg) {
         if(list === undefined || list[0] === undefined) return null;
@@ -319,7 +319,7 @@ class ehImg {
             let asyncList = [];
 
             for (let i in list) {
-                asyncList[i] = ehImg._getUrl(list[i], getViewImg);
+                asyncList[i] = EhImg._getUrl(list[i], getViewImg);
             }
 
             return await Promise.all([...asyncList]).then(v => {
@@ -327,12 +327,12 @@ class ehImg {
             });
         }
 
-        return await ehImg._getUrl(list,getViewImg);
+        return await EhImg._getUrl(list,getViewImg);
     }
 
     static async _getUrl(href,getViewImg){
          let html = await getViewImg(href);
-         return await ehImg. _parseGalleryImgUrl(html)
+         return await EhImg. _parseGalleryImgUrl(html)
     }
 
     static async _parseGalleryImgUrl(html){
@@ -342,8 +342,8 @@ class ehImg {
 }
 
 module.exports = {
-    ehIndex: ehIndex,
-    ehGallery: ehGallery,
-    ehSearch: ehSearch,
-    ehImg: ehImg
+    EhIndex: EhIndex,
+    EhGallery: EhGallery,
+    EhSearch: EhSearch,
+    EhImg: EhImg
 }

@@ -1,39 +1,39 @@
 //ghs
-const ehFetch = require('./ehFetch');
-const ehParse = require('./ehParse');
-const ehDown = require('./ehDown');
+const EhFetch = require('./ehFetch');
+const EhParse = require('./ehParse');
+const EhDown = require('./ehDown');
 
-class exApi {
-    _ehHtml;
+class ExApi {
+    _EhHtml;
     constructor(userCookies, socks5proxy) {
         if (!(userCookies instanceof Object)) return 'userCookies null';
-        this._ehHtml = ehFetch.ehHtml(userCookies, socks5proxy);
+        this._EhHtml = EhFetch.EhHtml(userCookies, socks5proxy);
     }
 
     async getIndex(page){
-        let html = await this._ehHtml.getIndex(page);
-        return new ehParse.ehIndex(html);
+        let html = await this._EhHtml.getIndex(page);
+        return new EhParse.EhIndex(html);
     }
 
     async getGalleryInfo(href, thumbnailsType= 1){
-        let html = await this._ehHtml.getGallery(href,0,thumbnailsType);
+        let html = await this._EhHtml.getGallery(href,0,thumbnailsType);
 
         const getHtml ={
             gallery: async (page) => {
-                return await this._ehHtml.getGallery(href, page, -1)
+                return await this._EhHtml.getGallery(href, page, -1)
             }
         }
 
-        return new ehParse.ehGallery(html, getHtml, href)
+        return new EhParse.EhGallery(html, getHtml, href)
     }
 
     async getImgUrl(list) {
-        return await ehParse.ehImg.get(list, this._ehHtml.getViewImg)
+        return await EhParse.EhImg.get(list, this._EhHtml.getViewImg)
     }
 
     async search(searchConfig) {
-        let html = await this._ehHtml.getSearch(searchConfig);
-        return new ehParse.ehSearch(html, searchConfig, this._ehHtml.getSearch)
+        let html = await this._EhHtml.getSearch(searchConfig);
+        return new EhParse.EhSearch(html, searchConfig, this._EhHtml.getSearch)
     }
 
     async downloadGallery(href, path = './download') {
@@ -42,9 +42,9 @@ class exApi {
         //不得不再请求一次
 
         let info = await this.getGalleryInfo(href);
-        let down = new ehDown(info, this._ehHtml.getViewImg, ehFetch.fetch);
+        let down = new EhDown(info, this._EhHtml.getViewImg, EhFetch.fetch);
         return down.run(path);
     }
 }
 
-module.exports = exApi;
+module.exports = { default: ExApi }

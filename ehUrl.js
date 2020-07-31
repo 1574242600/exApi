@@ -1,4 +1,4 @@
-class ehUrl {
+class EhUrl {
     static host = 'https://exhentai.org'
 
     static indexPage(page) {
@@ -93,4 +93,4 @@ class ehUrl {
     }
 }
 
-module.exports = ehUrl;
+module.exports = EhUrl;

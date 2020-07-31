@@ -83,7 +83,7 @@ declare module 'exapi' {
 
     type  ThumbnailsType = 0 | 1 ;
 
-    class exApi {
+    export default class {
         constructor(cookies: ApiCookies, proxy?: string)
 
         getIndex(page: number): Promise<ehIndex>
@@ -93,21 +93,19 @@ declare module 'exapi' {
         downloadGallery(href: GalleryToken, path?: string): Promise<DownStatus[]>
     }
 
-    export = exApi;
-
-    class ehIndex {
+    class EhIndex {
         pages: number;
 
         getAll(): PartialGalleryInfo[]
     }
 
-    class ehSearch extends ehIndex {
+    class EhSearch extends ehIndex {
         page: number;
 
         next(advance?: number): Promise<this | null>
     }
 
-    class ehGallery {
+    class EhGallery {
         _info: GalleryInfo;
         _thumbnails: string[];
         _viewImgHref: ViewToken[];
