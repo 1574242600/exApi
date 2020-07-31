@@ -8,7 +8,8 @@ declare module 'exapi' {
     interface SearchConfig {
         type: GalleryType[],
         tag?: { [T in TagNamespace]?: string[] },
-        text?: string
+        text?: string,
+        advanced?: {[]}
     }
 
     interface DownStatus {
@@ -86,10 +87,10 @@ declare module 'exapi' {
     export default class {
         constructor(cookies: ApiCookies, proxy?: string)
 
-        getIndex(page: number): Promise<ehIndex>
-        getGalleryInfo(gallery: GalleryToken, thumbnails_type?: ThumbnailsType): Promise<ehGallery>
+        getIndex(page: number): Promise<EhIndex>
+        getGalleryInfo(gallery: GalleryToken, thumbnails_type?: ThumbnailsType): Promise<EhGallery>
         getImgUrl(token: ViewToken | ViewToken[]): Promise<string | string[]>
-        search(search: string | SearchConfig | object): Promise<ehSearch>
+        search(search: string | SearchConfig | object): Promise<EhSearch>
         downloadGallery(href: GalleryToken, path?: string): Promise<DownStatus[]>
     }
 
@@ -99,7 +100,7 @@ declare module 'exapi' {
         getAll(): PartialGalleryInfo[]
     }
 
-    class EhSearch extends ehIndex {
+    class EhSearch extends EhIndex {
         page: number;
 
         next(advance?: number): Promise<this | null>

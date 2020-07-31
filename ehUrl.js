@@ -22,74 +22,86 @@ class EhUrl {
     //TODO 等我攒满300hath再说
 
     static search(searchConfig, p) {
-        const config = searchConfig;
+        if (typeof (config) === 'string') return `${this.host}/?f_search=${searchConfig}&page=${p}`;
+        let str = EhSearchQuery.getQueryStr(searchConfig, p);
+        return this.host + str;
+    }
+}
 
-        if (typeof (config) === 'string') return `${this.host}/?f_search=${config}&page=${p}`;
-        let str = '/?';  //查询字符串
+class EhSearchQuery {
+    static _queryStr = '/?'
+    static _config;
 
-        {//基础
+    static getQueryStr(searchConfig, p) {
+        this._config = searchConfig;
+        this._basisSearch(p);
+        this._advancedSearch();
+        return this._queryStr;
+    }
 
-            {// 页码
-                str = str + `page=${p}`
-            }
+    static _basisSearch(p) {
+        this._queryStr += `page=${p}` // 页码
+        this._addType();
+        this._addTagAndText();
+    }
+    
+    static _advancedSearch() {
+        let config = this._config;
 
-            {//类型
-                const typeValueObj = {
-                    'Doujinshi': 2,
-                    'Manga': 4,
-                    'Artist CG': 8,
-                    'Game CG': 16,
-                    'Western': 512,
-                    'Non-H': 256,
-                    'Image Set': 32,
-                    'Cosplay': 64,
-                    'Asian Porn': 128,
-                    'Misc': 1
-                };
+        if (config.advanced instanceof Object && Object.keys(config.advanced).length !== 0) {
+            this._queryStr += '&advsearch=1'
+        }
+    }
 
-                let typeValue = 1023;
+    static _addType() {
+        const typeValueObj = {
+            'Doujinshi': 2,
+            'Manga': 4,
+            'Artist CG': 8,
+            'Game CG': 16,
+            'Western': 512,
+            'Non-H': 256,
+            'Image Set': 32,
+            'Cosplay': 64,
+            'Asian Porn': 128,
+            'Misc': 1
+        };
 
-                if (config.type instanceof Array && config.type.length !== 0) {
-                    for (let typeStr of config.type) {
-                        if (typeValueObj[typeStr] !== undefined) typeValue -= typeValueObj[typeStr];
-                    }
-                }
+        let typeValue = 1023;
 
-                str = str + `&f_cats=${typeValue}`
-            }
-
-
-            {// 搜索文本字符串
-                let tagAllStr = '';
-                let text = '';
-
-                if (typeof (config.text) === 'string') text = config.text;
-                //标签
-                if (config.tag instanceof Object && Object.keys(config.tag).length !== 0) {
-                    for (let key in config.tag) {
-                        if (config.tag[key].length === 0) continue;
-                        tagAllStr = tagAllStr + `${key}:`;
-                        if (config.tag[key].length === 1) tagAllStr = tagAllStr + '"'; //某属性只有一个tag时
-
-                        for (let tagStr of config.tag[key]) {
-                            tagStr = tagStr.replace(/ /g, '+');
-                            tagAllStr = tagAllStr + `${tagStr} `
-                        }
-
-                        tagAllStr = tagAllStr.trim() + '$ ';
-                        if (config.tag[key].length === 1) tagAllStr = tagAllStr.trim() + '" '; //某属性只有一个tag时
-                    }
-                }
-
-                str = str + `&f_search=${tagAllStr} ${text}`
-
+        if (this._config.type instanceof Array && this._config.type.length !== 0) {
+            for (let typeStr of this._config.type) {
+                if (typeValueObj[typeStr] !== undefined) typeValue -= typeValueObj[typeStr];
             }
         }
 
-        {
-        } //todo 高级搜索
+        this._queryStr += `&f_cats=${typeValue}`
+    }
 
-        return this.host + str;
+    static _addTagAndText() {
+        let config = this._config;
+        let tagAllStr = '';
+        let text = '';
+
+        if (typeof (config.text) === 'string') text = config.text;
+        //标签
+        if (config.tag instanceof Object && Object.keys(config.tag).length !== 0) {
+            for (let key in config.tag) {
+                if (config.tag[key].length === 0) continue;
+                tagAllStr = tagAllStr + `${key}:`;
+                if (config.tag[key].length === 1) tagAllStr = tagAllStr + '"'; //某属性只有一个tag时
+
+                for (let tagStr of config.tag[key]) {
+                    tagStr = tagStr.replace(/ /g, '+');
+                    tagAllStr = tagAllStr + `${tagStr} `
+                }
+
+                tagAllStr = tagAllStr.trim() + '$ ';
+                if (config.tag[key].length === 1) tagAllStr = tagAllStr.trim() + '" '; //某属性只有一个tag时
+            }
+        }
+
+        this._queryStr += `&f_search=${tagAllStr} ${text}`
     }
 }
 

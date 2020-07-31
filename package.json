@@ -1,6 +1,6 @@
 {
   "name": "exapi",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "exhentai api",
   "main": "exApi.js",
   "types":"index.d.js",
