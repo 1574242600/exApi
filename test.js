@@ -24,20 +24,20 @@ async function main() {
 
 
     {   //画廊
-        let gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8']);
+        let gallery = await exapi.getGalleryInfo(['627844','39dbc33ad8']);
         //log(gallery, 'getGallery')
-        log(gallery.getAllInfo(), 'getAllInfo')
-        log(gallery.getInfo('type'), 'getInfo')
-        log(gallery.getThumbnails(), 'getThumbnails')
-        log(gallery.getViewHref(), 'getViewUrl')
-        log(gallery.getComment(), 'getComment')
+        log(gallery.getAllInfo(),'getAllInfo')
+        log(gallery.getInfo('type'),'getInfo')
+        log(gallery.getThumbnails(),'getThumbnails')
+        log(gallery.getViewHref(),'getViewUrl')
+        log(gallery.getComment(),'getComment')
 
 
         {
             let imgUrl = await exapi.getImgUrl(gallery.getViewHref()[0]);
-            log(imgUrl, 'getImgUrl a')
+            log(imgUrl,'getImgUrl a')
             let imgUrlArr = await exapi.getImgUrl(gallery.getViewHref());
-            log(imgUrlArr, 'getImgUrl arr')
+            log(imgUrlArr,'getImgUrl arr')
         }
 
 
@@ -45,8 +45,8 @@ async function main() {
 
         //log(gallery.getAllInfo(),'getAllInfo')
         //log(gallery.getInfo('type'),'getInfo')
-        log(gallery.getThumbnails(), 'getThumbnails')
-        log(gallery.getViewHref(), 'getViewUrl')
+        log(gallery.getThumbnails(),'getThumbnails')
+        log(gallery.getViewHref(),'getViewUrl')
         //log(gallery, 'getGallery2')
     }
 
@@ -54,9 +54,9 @@ async function main() {
 
         {//字符串
             let search = await exapi.search('c97')
-            log(search.getAll(), 'string search.getAll()')
+            log(search.getAll(),'String search.getAll()')
             await search.next()
-            log(search.getAll(), 'string search.next()')
+            log(search.getAll(),'String search.next()')
         }
 
         {//tag
@@ -64,25 +64,51 @@ async function main() {
                 type: ['Doujinshi'],
                 tag: {
                     artist: ['shouji ayumu'],
-                    female: ['lolicon'],
+                    female: ['lolicon','sole female'],
                 },
-                text: ''
+                text: '',
             }
 
             let search = await exapi.search(searchConfig)
-            log(search.getAll(), 'tag search.getAll()')
+            log(search.getAll(),'Tag search.getAll()')
             await search.next()
-            log(search.getAll(), 'tag search.next()')
+            log(search.getAll(),'Tag search.next()')
+        }
+
+        {//高级
+            let searchConfig = {
+                type: ['Doujinshi'],
+                tag: {
+                    artist: ['shouji ayumu'],
+                    female: ['lolicon'],
+                },
+                text: '',
+                advanced: { //高级搜索设置   详情请查看index.d.ts
+                    enable: {name: true, tags: true},
+                    show: {delete: true},
+                    rating: 5,
+                    between: [1, 20],
+                    disableFilter: {
+                      lang: true
+                    }
+                } 
+            }
+
+            let search = await exapi.search(searchConfig)
+            log(search.getAll(),'Advanced search.getAll()')
+            await search.next()
+            log(search.getAll(),'Advanced search.next()')
         }
 
     }
 
     {   //下载
-        exapi.downloadGallery(['627844', '39dbc33ad8']).then(statusList => {
+        exapi.downloadGallery(['627844','39dbc33ad8']).then(statusList => {
             console.log(statusList)
         });
 
     }
+
 }
 
 

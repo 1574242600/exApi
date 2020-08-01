@@ -9,7 +9,13 @@ declare module 'exapi' {
         type: GalleryType[],
         tag?: { [T in TagNamespace]?: string[] },
         text?: string,
-        advanced?: {[]}
+        advanced?: {
+            enable?: { [T in AdvancedSearchEnable]?: boolean };
+            show?: { [T in AdvancedSearchShow]?: boolean };
+            rating?: number         //最低评分  应为 2 - 5 之间的整数
+            between?: [number, number];    //介于 _ 和 _ 页  整数
+            disableFilter?: { [T in AdvancedSearchDisableFilter]?: boolean };
+        }
     }
 
     interface DownStatus {
@@ -20,6 +26,25 @@ declare module 'exapi' {
 
     type GalleryToken = [string, string];
     type ViewToken = [string, string];
+
+
+    type AdvancedSearchEnable =
+        'name' | //是否搜索画廊名称
+        'tags' | //是否搜索标签
+        'desc' | //是否搜索描述
+        'torr' | //是否搜索种子文件名
+        'dt1' | //是否搜索低权重标签
+        'dt2'; //是否搜索投票移除了的标签
+
+    type AdvancedSearchShow =
+        'torr' | //是否只显示有种子的图库
+        'delete'; //是否显示已删除的库
+
+    type AdvancedSearchDisableFilter =
+        'lang' |    //是否禁用语言过滤
+        'uploader' |    //是否禁用上传者过滤
+        'tags';    //是否禁用标签过滤
+
 
     type TagNamespace =
         'language' |
@@ -82,7 +107,7 @@ declare module 'exapi' {
         text: string
     }
 
-    type  ThumbnailsType = 0 | 1 ;
+    type ThumbnailsType = 0 | 1;
 
     export default class {
         constructor(cookies: ApiCookies, proxy?: string)
@@ -111,7 +136,7 @@ declare module 'exapi' {
         _thumbnails: string[];
         _viewImgHref: ViewToken[];
         _comment: Comment[];
-        _total: number;  
+        _total: number;
         _getHtml: string;
         href: GalleryToken;
         page: number;

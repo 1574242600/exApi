@@ -8,7 +8,7 @@ class EhDownload extends EhImg {
     _fetch;
     _retryNumber = {};  //重试次数
 
-    constructor(info, getViewImg, fetch) {
+    constructor (info, getViewImg, fetch) {
         super();
         this._info = info;
         this._getViewImg = getViewImg;

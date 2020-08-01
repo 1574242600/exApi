@@ -5,20 +5,20 @@ const EhDown = require('./ehDown');
 
 class ExApi {
     _EhHtml;
-    constructor(userCookies, socks5proxy) {
+    constructor (userCookies, socks5proxy) {
         if (!(userCookies instanceof Object)) return 'userCookies null';
         this._EhHtml = EhFetch.EhHtml(userCookies, socks5proxy);
     }
 
-    async getIndex(page){
+    async getIndex(page) {
         let html = await this._EhHtml.getIndex(page);
         return new EhParse.EhIndex(html);
     }
 
-    async getGalleryInfo(href, thumbnailsType= 1){
-        let html = await this._EhHtml.getGallery(href,0,thumbnailsType);
+    async getGalleryInfo(href, thumbnailsType = 1) {
+        let html = await this._EhHtml.getGallery(href, 0, thumbnailsType);
 
-        const getHtml ={
+        const getHtml = {
             gallery: async (page) => {
                 return await this._EhHtml.getGallery(href, page, -1)
             }

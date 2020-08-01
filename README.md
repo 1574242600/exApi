@@ -86,7 +86,16 @@ let searchConfig = {
          female: ['lolicon'...],
      ...
      },
-     text: '' //搜索字符串
+     text: '', //搜索字符串
+     advanced: { //高级搜索设置   详情请查看index.d.ts
+        enable: {name: true},
+        show: {torr: true},
+        rating: 5,
+        between: [1, 5],
+        disableFilter: {
+          lang: true
+        }
+     }  
 };
             
 let search = await exapi.search(searchConfig)
@@ -310,7 +319,8 @@ Thx
 ## todo
 - 搜索
     - [x] 基础搜索
-    - [ ] 高级搜索
+    - [x] 高级搜索
+      - [ ] 文件搜索
 - [x] 下载
     - [x] 优化
  
