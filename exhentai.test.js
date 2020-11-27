@@ -9,8 +9,7 @@ const ehApi = require('./exApi').default;
 const exapi = new ehApi(cookies);
 jest.setTimeout(60000);
 
-(async () => {
-
+describe('测试exhentai', () => {
     describe('测试getIndex', () => {
         it('getIndex()', () => {
             return exapi.getIndex().then(data => {
@@ -26,9 +25,16 @@ jest.setTimeout(60000);
             })
         })
     })
-    const gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8']);
+
+    let gallery;
 
     describe('测试 getGalleryInfo', () => {
+
+        beforeEach(() => {
+            return async () => { 
+                gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8']) 
+            };
+        });
 
         it('getAllInfo()', () => {
             const allInfo = gallery.getAllInfo();
@@ -52,9 +58,12 @@ jest.setTimeout(60000);
         })
     })
 
-    await gallery.next();
 
-    describe('getGalleryInfo.next()', async () => {
+
+    describe('getGalleryInfo.next()', () => {
+        beforeEach(() => {
+            return gallery.next();
+        });
 
         it('getThumbnails()', () => {
             expect(gallery.getThumbnails().length > 0).toBe(true)
@@ -64,7 +73,8 @@ jest.setTimeout(60000);
             expect(gallery.getViewHref().length > 0).toBe(true)
         })
     })
-})()
+
+})
 
 
 
