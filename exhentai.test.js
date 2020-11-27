@@ -73,12 +73,6 @@ async function main() {
 
     {   //画廊
         let gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8']);
-        //log(gallery, 'getGallery')
-        log(gallery.getAllInfo(), 'getAllInfo')
-        log(gallery.getInfo('type'), 'getInfo')
-        log(gallery.getThumbnails(), 'getThumbnails')
-        log(gallery.getViewHref(), 'getViewUrl')
-        log(gallery.getComment(), 'getComment')
 
 
         {
@@ -151,10 +145,12 @@ async function main() {
     }
 
     {   //下载
-        exapi.downloadGallery(['627844', '39dbc33ad8']).then(statusList => {
-            console.log(statusList)
-        });
+        
 
     }
 
 }
+
+exapi.downloadGallery(['627844', '39dbc33ad8']).then(statusList => {
+    console.log(statusList)
+});
