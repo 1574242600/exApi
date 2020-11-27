@@ -10,26 +10,27 @@ const exapi = new ehApi(cookies);
 
 jest.setTimeout(60000);
 
-(async () => {
-    describe('测试getIndex', () => {
-        it('getIndex()', () => {
-            return exapi.getIndex().then(data => {
-                expect(data.getAll().length > 0).toBe(true)
-            })
-        })
 
-        it('next()', () => {
-            return exapi.getIndex().then(data => {
-                return data.next().then(data2 => {
-                    expect(data2.getAll().length > 0).toBe(true)
-                })
-            })
+describe('测试getIndex', () => {
+    it('getIndex()', () => {
+        return exapi.getIndex().then(data => {
+            expect(data.getAll().length > 0).toBe(true)
         })
     })
 
+    it('next()', () => {
+        return exapi.getIndex().then(data => {
+            return data.next().then(data2 => {
+                expect(data2.getAll().length > 0).toBe(true)
+            })
+        })
+    })
+})
+
+(async () => {
     const gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8']);
 
-    describe('测试 getGalleryInfo', async () => {
+    describe('测试 getGalleryInfo', () => {
 
         it('getAllInfo()', () => {
             const allInfo = gallery.getAllInfo();
@@ -51,20 +52,23 @@ jest.setTimeout(60000);
         it('gallery.getComment()', () => {
             expect(gallery.getComment().length >= 0).toBe(true)
         })
+    })
 
-        describe('next()', async () => {
-            await gallery.next();
+    await gallery.next();
 
-            it('getThumbnails()', () => {
-                expect(gallery.getThumbnails().length > 0).toBe(true)
-            })
+    describe('getGalleryInfo.next()', async () => {
+        
+        it('getThumbnails()', () => {
+            expect(gallery.getThumbnails().length > 0).toBe(true)
+        })
 
-            it('getViewHref()', () => {
-                expect(gallery.getViewHref().length > 0).toBe(true)
-            })
+        it('getViewHref()', () => {
+            expect(gallery.getViewHref().length > 0).toBe(true)
         })
     })
 })()
+
+
 
 async function main() {
 
