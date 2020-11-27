@@ -7,27 +7,25 @@ const cookies = {
 const ehApi = require('./exApi').default;
 //const socks5proxy = "socks5://127.0.0.1:1083";
 const exapi = new ehApi(cookies);
-
 jest.setTimeout(60000);
 
+(async () => {
 
-describe('测试getIndex', () => {
-    it('getIndex()', () => {
-        return exapi.getIndex().then(data => {
-            expect(data.getAll().length > 0).toBe(true)
+    describe('测试getIndex', () => {
+        it('getIndex()', () => {
+            return exapi.getIndex().then(data => {
+                expect(data.getAll().length > 0).toBe(true)
+            })
         })
-    })
 
-    it('next()', () => {
-        return exapi.getIndex().then(data => {
-            return data.next().then(data2 => {
-                expect(data2.getAll().length > 0).toBe(true)
+        it('next()', () => {
+            return exapi.getIndex().then(data => {
+                return data.next().then(data2 => {
+                    expect(data2.getAll().length > 0).toBe(true)
+                })
             })
         })
     })
-})
-
-(async () => {
     const gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8']);
 
     describe('测试 getGalleryInfo', () => {
@@ -57,7 +55,7 @@ describe('测试getIndex', () => {
     await gallery.next();
 
     describe('getGalleryInfo.next()', async () => {
-        
+
         it('getThumbnails()', () => {
             expect(gallery.getThumbnails().length > 0).toBe(true)
         })
