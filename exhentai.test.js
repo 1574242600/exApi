@@ -12,18 +12,9 @@ jest.setTimeout(60000);
 describe('测试exhentai', () => {
 
     describe('测试 Index', () => {
-        let Index;
         it('getIndex()', () => {
             return exapi.getIndex().then(data => {
                 expect(data.getAll().length > 0).toBe(true)
-            })
-        })
-
-        it('next()', () => {
-            return exapi.getIndex().then(data => {
-                return data.next().then(data2 => {
-                    expect(data2.getAll().length > 0).toBe(true)
-                })
             })
         })
     })
@@ -31,7 +22,6 @@ describe('测试exhentai', () => {
     describe('测试 Gallery', () => {
         let Gallery;
         describe('getGalleryInfo', () => {
-
             beforeEach(async () => {
                 Gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8'])
             });
@@ -58,7 +48,7 @@ describe('测试exhentai', () => {
             })
         })
 
-        describe('getGalleryInfo.next()', () => {
+        describe('next()', () => {
             beforeEach(async () => {
                 await Gallery.next();
             });
@@ -73,7 +63,7 @@ describe('测试exhentai', () => {
         })
     })
 
-    
+
 })
 
 
