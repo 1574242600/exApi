@@ -116,7 +116,7 @@ declare module 'exapi' {
         getGalleryInfo(gallery: GalleryToken, thumbnails_type?: ThumbnailsType): Promise<EhGallery>
         getImgUrl(token: ViewToken | ViewToken[]): Promise<string | string[]>
         search(search: string | SearchConfig | object): Promise<EhSearch>
-        downloadGallery(href: GalleryToken, path?: string): Promise<DownStatus[]>
+        downloadGallery(href: GalleryToken, path?: string): Promise<DownStatus[] | false>
     }
 
     class EhIndex {

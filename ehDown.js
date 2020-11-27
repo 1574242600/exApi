@@ -48,6 +48,7 @@ class EhDownload extends EhImg {
             this._logger('Note', `画廊下载失败 开始重试[${this._retryNumber.run}]`);
             if (this._retryNumber.run <= 2) return await this.run(path)
             this._logger('Note', `画廊下载失败`);
+            return false;
         }
 
         return statusList;

@@ -63,9 +63,12 @@ describe('测试exhentai', () => {
         })
     })
 
-
+    it('测试 download', () => {
+       return exapi.downloadGallery(['627844', '39dbc33ad8']).then(statusList => {
+            console.log(statusList)
+        });        
+    })
 })
-
 
 
 async function main() {
@@ -151,6 +154,3 @@ async function main() {
 
 }
 
-exapi.downloadGallery(['627844', '39dbc33ad8']).then(statusList => {
-    console.log(statusList)
-});
