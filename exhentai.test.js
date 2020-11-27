@@ -10,7 +10,9 @@ const exapi = new ehApi(cookies);
 jest.setTimeout(60000);
 
 describe('测试exhentai', () => {
-    describe('测试getIndex', () => {
+
+    describe('测试 Index', () => {
+        let Index;
         it('getIndex()', () => {
             return exapi.getIndex().then(data => {
                 expect(data.getAll().length > 0).toBe(true)
@@ -26,54 +28,52 @@ describe('测试exhentai', () => {
         })
     })
 
-    let gallery;
+    describe('测试 Gallery', () => {
+        let Gallery;
+        describe('getGalleryInfo', () => {
 
-    describe('测试 getGalleryInfo', () => {
+            beforeEach(async () => {
+                Gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8'])
+            });
 
-        beforeEach(() => {
-            return async () => { 
-                gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8']) 
-            };
-        });
+            it('getAllInfo()', () => {
+                const allInfo = Gallery.getAllInfo();
+                expect(allInfo).toHaveProperty('type', 'Doujinshi')
+            })
 
-        it('getAllInfo()', () => {
-            const allInfo = gallery.getAllInfo();
-            expect(allInfo).toHaveProperty('type', 'Doujinshi')
+            it('getInfo()', () => {
+                expect(Gallery.getInfo('type')).toBe('Doujinshi')
+            })
+
+            it('getThumbnails()', () => {
+                expect(Gallery.getThumbnails().length > 0).toBe(true)
+            })
+
+            it('getViewHref()', () => {
+                expect(Gallery.getViewHref().length > 0).toBe(true)
+            })
+
+            it('getComment()', () => {
+                expect(Gallery.getComment().length >= 0).toBe(true)
+            })
         })
 
-        it('getInfo()', () => {
-            expect(gallery.getInfo('type')).toBe('Doujinshi')
-        })
+        describe('getGalleryInfo.next()', () => {
+            beforeEach(async () => {
+                await Gallery.next();
+            });
 
-        it('getThumbnails()', () => {
-            expect(gallery.getThumbnails().length > 0).toBe(true)
-        })
+            it('getThumbnails()', () => {
+                expect(Gallery.getThumbnails().length > 0).toBe(true)
+            })
 
-        it('getViewHref()', () => {
-            expect(gallery.getViewHref().length > 0).toBe(true)
-        })
-
-        it('gallery.getComment()', () => {
-            expect(gallery.getComment().length >= 0).toBe(true)
-        })
-    })
-
-
-
-    describe('getGalleryInfo.next()', () => {
-        beforeEach(() => {
-            return gallery.next();
-        });
-
-        it('getThumbnails()', () => {
-            expect(gallery.getThumbnails().length > 0).toBe(true)
-        })
-
-        it('getViewHref()', () => {
-            expect(gallery.getViewHref().length > 0).toBe(true)
+            it('getViewHref()', () => {
+                expect(Gallery.getViewHref().length > 0).toBe(true)
+            })
         })
     })
 
+    
 })
 
 
