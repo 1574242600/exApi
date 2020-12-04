@@ -61,39 +61,37 @@ describe('测试exhentai', () => {
                 expect(Gallery.getViewHref().length > 0).toBe(true)
             })
         })
+
+        describe('exapi.getimgUrl()', () => {
+            beforeEach(async () => {
+                Gallery.imgUrlArray = await exapi.getImgUrl(Gallery.getViewHref());
+            });
+
+            it('string', () => {
+                const imgUrl = Gallery.imgUrlArray[0];
+                expect(/^http(s?):\/\//.test(imgUrl)).toBe(true)
+            })
+
+            it('array', () => {
+                const imgUrlArr = Gallery.imgUrlArray;
+                expect(imgUrlArr.length > 0 && /^http(s?):\/\//.test(imgUrlArr[0])).toBe(true)
+            })
+        })
     })
 
+  
+
     it('测试 download', () => {
-       return exapi.downloadGallery(['627844', '39dbc33ad8']).then(statusList => {
+        return exapi.downloadGallery(['627844', '39dbc33ad8']).then(statusList => {
             expect(statusList).not.toBe(false);
-        });        
+        });
     })
+
 })
 
 
 async function main() {
 
-
-    {   //画廊
-        let gallery = await exapi.getGalleryInfo(['627844', '39dbc33ad8']);
-
-
-        {
-            let imgUrl = await exapi.getImgUrl(gallery.getViewHref()[0]);
-            log(imgUrl, 'getImgUrl a')
-            let imgUrlArr = await exapi.getImgUrl(gallery.getViewHref());
-            log(imgUrlArr, 'getImgUrl arr')
-        }
-
-
-        await gallery.next();
-
-        //log(gallery.getAllInfo(),'getAllInfo')
-        //log(gallery.getInfo('type'),'getInfo')
-        log(gallery.getThumbnails(), 'getThumbnails')
-        log(gallery.getViewHref(), 'getViewUrl')
-        //log(gallery, 'getGallery2')
-    }
 
     {// 搜索
 
@@ -148,7 +146,7 @@ async function main() {
     }
 
     {   //下载
-        
+
 
     }
 
