@@ -25,7 +25,7 @@ jobs:
     - name: install
       run: npm install
     - name: test download
-      run: npm run test-download 
+      run: npm run download-test
     - name: view download folder
       run: |
         echo '==============/download/=================='
