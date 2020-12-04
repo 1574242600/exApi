@@ -6,6 +6,7 @@ const cookies = {
 
 const ehApi = require('./exApi').default;
 const exapi = new ehApi(cookies);
+jest.setTimeout(600000);
 
 it('测试 download', () => {
     return exapi.downloadGallery(['627844', '39dbc33ad8']).then(statusList => {

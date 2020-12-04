@@ -7,7 +7,7 @@ const cookies = {
 const ehApi = require('./exApi').default;
 //const socks5proxy = "socks5://127.0.0.1:1083";
 const exapi = new ehApi(cookies);
-jest.setTimeout(60000);
+jest.setTimeout(600000);
 
 describe('测试exhentai', () => {
 
