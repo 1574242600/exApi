@@ -78,23 +78,15 @@ describe('测试exhentai', () => {
             })
         })
     })
-})
 
+    describe('测试 search', () => {
+        it('string', async () => {
+            const Search = await exapi.search('c97');
+            expect(Search.getAll().length > 0).toBe(true)
+        })
 
-async function main() {
-
-
-    {// 搜索
-
-        {//字符串
-            let search = await exapi.search('c97')
-            log(search.getAll(), 'String search.getAll()')
-            await search.next()
-            log(search.getAll(), 'String search.next()')
-        }
-
-        {//tag
-            let searchConfig = {
+        it('tag', async () => {
+            const searchConfig = {
                 type: ['Doujinshi'],
                 tag: {
                     artist: ['shouji ayumu'],
@@ -103,14 +95,12 @@ async function main() {
                 text: '',
             }
 
-            let search = await exapi.search(searchConfig)
-            log(search.getAll(), 'Tag search.getAll()')
-            await search.next()
-            log(search.getAll(), 'Tag search.next()')
-        }
+            const Search = await exapi.search(searchConfig);
+            expect(Search.getAll().length > 0).toBe(true)
+        })
 
-        {//高级
-            let searchConfig = {
+        it('advanced', async () => {
+            const searchConfig = {
                 type: ['Doujinshi'],
                 tag: {
                     artist: ['shouji ayumu'],
@@ -128,18 +118,8 @@ async function main() {
                 }
             }
 
-            let search = await exapi.search(searchConfig)
-            log(search.getAll(), 'Advanced search.getAll()')
-            await search.next()
-            log(search.getAll(), 'Advanced search.next()')
-        }
-
-    }
-
-    {   //下载
-
-
-    }
-
-}
-
+            const Search = await exapi.search(searchConfig);
+            expect(Search.getAll().length > 0).toBe(true)
+        })
+    })
+})
