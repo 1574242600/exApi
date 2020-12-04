@@ -16,7 +16,8 @@
     "url": "git://github.com/1574242600/exApi.git"
   },
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest exhentai.test.js",
+    "download-test": "npx jest down.test.js"
   },
   "keywords": [
     "hentai"
