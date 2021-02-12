@@ -103,7 +103,7 @@ class EhDownload extends EhImg {
             let stat = fs.statSync(path);
             stat = fs.statSync(this._path);
         } catch (e) {
-            fs.mkdirSync(path);
+            if (!fs.existsSync(path)) fs.mkdirSync(path);
             fs.mkdirSync(this._path);
             this._mkdir(path);
         }
