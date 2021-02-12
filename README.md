@@ -11,7 +11,7 @@ npm install exapi -save
 
 ## 使用方法
 1. 一个可以进里区的账户  
-2. 代理   （可选，exhentai没被墙）
+2. 代理  
 
 ```javascript
 const exApi = require('exApi').default;
