@@ -1,8 +1,9 @@
 # exApi
 ![Test](https://github.com/1574242600/exApi/workflows/Test/badge.svg)
 
-exHentai API 
+exHentai API  
 
+[该项目正在使用 TS 重写](https://github.com/1574242600/exapi2.git)
 
 ## 安装
 ```bash
