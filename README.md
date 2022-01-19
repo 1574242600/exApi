@@ -1,5 +1,6 @@
 # exApi
 ![Test](https://github.com/1574242600/exApi/workflows/Test/badge.svg)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2F1574242600%2FexApi.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2F1574242600%2FexApi?ref=badge_shield)
 
 exHentai API  
 
@@ -327,3 +328,6 @@ Thx
  
 ## License
 MIT
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2F1574242600%2FexApi.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2F1574242600%2FexApi?ref=badge_large)
