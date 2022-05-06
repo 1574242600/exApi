@@ -20,6 +20,7 @@ const exApi = require('exApi').default;
 const cookies = {
     'ipb_member_id': *,
     'ipb_pass_hash': *,
+    'sk': *, //参见 issues #3
     'igneous': *
 }
 
